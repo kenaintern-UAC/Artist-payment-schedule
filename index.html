@@ -120,7 +120,7 @@
 
       <div class="invline">
         <input type="checkbox">
-        <div>HP1&nbsp;INV&nbsp;<input type="text" placeholder=""> </div>
+        <div>HP1&nbsp;INV&nbsp;<input id="a_hp1_input" type="number" step="50" min="0" placeholder=""></div>
         <div class="amt" id="a_hp1">—</div>
       </div>
 
@@ -356,10 +356,17 @@
   const $ = (id)=>document.getElementById(id);
 
   function recalc(){
-    const T = Number($('budget').value)||0;
+    const totalEntered = Number($('budget').value)||0;
+    const hp1Invoice   = Number($('a_hp1_input')?.value)||0; // we’ll add an input for HP1 invoice
+
+    // Subtract HP1 from total
+    const T = Math.max(totalEntered - hp1Invoice, 0);
+
     const D = T*0.25, F = T*0.75;
 
-    $('budgetEcho').textContent = T? `Entered: ${fmt.format(T)}` : '';
+    $('budgetEcho').textContent = totalEntered
+      ? `Entered: ${fmt.format(totalEntered)} • After HP1: ${fmt.format(T)}`
+      : '';
 
     $('designBudget').textContent = D? fmt.format(D):'';
     $('fabBudget').textContent    = F? fmt.format(F):'';
@@ -386,20 +393,22 @@
     $('sum_cp4').textContent = F? fmt.format(cp4):'—';
 
     const contract = dp1+dp2+dp3+dp4+cp1+cp2+cp3+cp4;
-    const h = Number($('hp1').value)||0;
     $('contractTotal').textContent = T? fmt.format(contract):'—';
-    $('honorTotal').textContent = fmt.format(h);
-    $('grandTotal').textContent = fmt.format(contract+h);
+    $('honorTotal').textContent = hp1Invoice ? fmt.format(hp1Invoice) : '—';
+    $('grandTotal').textContent = fmt.format(contract+hp1Invoice);
 
-    // Check that contract equals total
-    const diff = Math.abs(T - contract);
-    $('matchNote').textContent = T? (diff<=0.01 ? 'OK: Contract total matches total budget.' : 'Warning: Contract total does not match total budget.') : '';
+    // Check match
+    const diff = Math.abs(totalEntered - (contract+hp1Invoice));
+    $('matchNote').textContent = totalEntered
+      ? (diff<=0.01 ? 'OK: Contract+HP1 matches entered budget.' : 'Warning: Totals don’t reconcile.')
+      : '';
   }
 
+  // add listeners
   $('budget').addEventListener('input', recalc);
-  $('hp1').addEventListener('input', recalc);
-  // Initialize for a common example (optional)
-  // $('budget').value = 192000; recalc();
+  document.addEventListener('input', e=>{
+    if(e.target.id==='a_hp1_input') recalc();
+  });
 </script>
 </body>
 </html>
