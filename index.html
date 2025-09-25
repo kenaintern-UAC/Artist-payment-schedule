@@ -19,10 +19,11 @@
   .shortline {
     display:inline-block;
     border-bottom:1px solid #000;
-    width:30px;        /* enough for a few digits */
-    height:0.9em;      /* aligns with text baseline */
+    width:30px;          /* adjust for how many digits */
     margin-right:6px;
-    vertical-align:bottom;
+    line-height:1;       
+    vertical-align:baseline; 
+    text-align:center;
   }
   .title-row{
     display:flex; justify-content:space-between; align-items:flex-end; gap:8px; margin-bottom:6px;
@@ -155,13 +156,13 @@
     </div>
     <div class="col">
       <div class="check">
-  <span class="shortline"></span>
+  <span class="shortline">&nbsp;</span>
   <label>Hours supporting applicants</label>
 </div>
       <div class="check"><input type="checkbox"><label>In-progress website page created</label></div>
       <div class="check"><input type="checkbox"><label>Community engagement</label></div>
-    <div class="check">
-  <span class="shortline"></span>
+   <div class="check">
+  <span class="shortline">&nbsp;</span>
   <label>Hours supporting finalists</label>
 </div>
       <div class="check"><input type="checkbox"><label>Finalists’ honorarium invoices received</label></div>
