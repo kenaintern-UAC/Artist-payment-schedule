@@ -16,6 +16,14 @@
     box-shadow: 0 4px 28px rgba(0,0,0,.08);
     border: 2px solid #000; padding: 18px;
   }
+  shortline {
+    display:inline-block;
+    border-bottom:1px solid #000;
+    width:30px;        /* enough for a few digits */
+    height:0.9em;      /* aligns with text baseline */
+    margin-right:6px;
+    vertical-align:bottom;
+  }
   .title-row{
     display:flex; justify-content:space-between; align-items:flex-end; gap:8px; margin-bottom:6px;
   }
@@ -147,13 +155,13 @@
     </div>
     <div class="col">
       <div class="check">
-  <span style="display:inline-block; border-bottom:1px solid #000; width:30px; margin-right:6px; vertical-align:baseline; height:1em;"></span>
+  <span class="shortline"></span>
   <label>Hours supporting applicants</label>
 </div>
       <div class="check"><input type="checkbox"><label>In-progress website page created</label></div>
       <div class="check"><input type="checkbox"><label>Community engagement</label></div>
     <div class="check">
-  <span style="display:inline-block; border-bottom:1px solid #000; width:30px; margin-right:6px; vertical-align:baseline; height:1em;"></span>
+  <span class="shortline"></span>
   <label>Hours supporting finalists</label>
 </div>
       <div class="check"><input type="checkbox"><label>Finalists’ honorarium invoices received</label></div>
